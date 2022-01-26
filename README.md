@@ -28,20 +28,20 @@ Open Tentacle is an open source robotics project for the design and implementati
 # Versions (Built and Design Only)
 
 - 0.1.2
-![Image of v. 0.1.2](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.2/0.1.2.jpg | width=200)
+- ![Image of v. 0.1.2](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.2/0.1.2.jpg | width=200)
 
 - 0.1.1
-![Image of v. 0.1.1](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.1/system_photo.jpg | width=200)
+- ![Image of v. 0.1.1](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.1/system_photo.jpg | width=200)
 
 - 0.1.0
-![Image of v. 0.1.0](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.0/arm_bent.png | width=200)
+- ![Image of v. 0.1.0](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.0/arm_bent.png | width=200)
 
 - 0.0.2 
-![Image of v. 0.0.2](https://raw.githubusercontent.com/jasonmhead/open-tentacle/main/0.0.2/renders/curved_w_500.png | width=200)
+- ![Image of v. 0.0.2](https://raw.githubusercontent.com/jasonmhead/open-tentacle/main/0.0.2/renders/curved_w_500.png | width=200)
 
 - 0.0.1
-![Image of v. 0.0.1](https://github.com/jasonmhead/open-tentacle/blob/main/.0.0.1/arm.v.0.0.1.PNG | width=200)
+- ![Image of v. 0.0.1](https://github.com/jasonmhead/open-tentacle/blob/main/.0.0.1/arm.v.0.0.1.PNG | width=200)
 
 - Initial hydraulic concept:
-![Image of hydraulic concept](https://github.com/jasonmhead/open-tentacle/blob/main/concepts/hydraulic/hydraulic_concept_1.JPG | width=200)
+- ![Image of hydraulic concept](https://github.com/jasonmhead/open-tentacle/blob/main/concepts/hydraulic/hydraulic_concept_1.JPG | width=200)
 
