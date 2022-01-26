@@ -40,7 +40,7 @@ Open Tentacle is an open source robotics project for the design and implementati
 - <img src="/0.0.2/renders/curved_w_500.png" width="200" />
 
 - 0.0.1
-- <img src="/.0.0.1/arm.v.0.0.1.PNG" width="200" />
+- <img src="/0.0.1/arm.v.0.0.1.PNG" width="200" />
 
 - Initial hydraulic concept:
 - <img src="/concepts/hydraulic/hydraulic_concept_1.JPG" width="200" />
