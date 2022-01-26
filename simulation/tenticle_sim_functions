@@ -1,0 +1,219 @@
+import bpy
+import bmesh
+from bpy.app.handlers import persistent
+import math
+
+def create_line_vertebre(vert_distance):
+    for x in range(5):
+        bpy.ops.mesh.extrude_region_move(
+        MESH_OT_extrude_region={
+        "use_normal_flip":False, "use_dissolve_ortho_edges":False, "mirror":False}, 
+        TRANSFORM_OT_translate={"value":(vert_distance, -0, -0), 
+        "orient_axis_ortho":'X', 
+        "orient_type":'GLOBAL', 
+        "orient_matrix":((1, 0, 0), (0, 1, 0), (0, 0, 1)), 
+        "orient_matrix_type":'GLOBAL', "constraint_axis":(True, False, False), 
+        "mirror":False, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', 
+        "proportional_size":1, "use_proportional_connected":False, 
+        "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', 
+        "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), 
+        "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, 
+        "remove_on_cancel":False, "view2d_edge_pan":False, "release_confirm":False, 
+        "use_accurate":False, "use_automerge_and_split":False})
+        
+def make_tendon_points():
+
+    for x in range(8):
+        bpy.ops.object.duplicate_move(OBJECT_OT_duplicate={"linked":False, "mode":'TRANSLATION'}, TRANSFORM_OT_translate={"value":(-0, -0, -0.5), "orient_axis_ortho":'X', "orient_type":'GLOBAL', "orient_matrix":((1, 0, 0), (0, 1, 0), (0, 0, 1)), "orient_matrix_type":'GLOBAL', "constraint_axis":(True, True, True), "mirror":False, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "view2d_edge_pan":False, "release_confirm":False, "use_accurate":False, "use_automerge_and_split":False})
+
+def process_coords(coord_tuple, rounding_places):
+    x, y, z = coord_tuple
+    
+    x = round(x, rounding_places)
+    y = round(y, rounding_places)
+    z = round(z, rounding_places)
+    
+    position_string = str(x) + ", " + str(y) + ", " + str(z)
+    position_string.encode('utf8')
+    position_string = position_string.replace("\n","")
+    
+    postion_data = (x, y, z, position_string)
+    
+    return postion_data
+
+def get_bone_pose_loc(armature_name, bone_name):
+    # get bone postion data
+    # "spine_armature"
+    # 'Bone.007'
+    x = bpy.data.objects[armature_name].pose.bones[bone_name].matrix.to_euler().x
+    y = bpy.data.objects[armature_name].pose.bones[bone_name].matrix.to_euler().y
+    z = bpy.data.objects[armature_name].pose.bones[bone_name].matrix.to_euler().z
+    
+    return process_coords((x, y, z), 2)
+
+
+def get_obj_vert_count(object_name):
+    context = bpy.context
+    vertebre_obj = context.scene.objects[object_name]
+    depsgraph = context.evaluated_depsgraph_get()
+    bm = bmesh.new()
+    bm.from_object(vertebre_obj, depsgraph)
+    
+    if hasattr(bm.verts, "ensure_lookup_table"): 
+        bm.verts.ensure_lookup_table()
+    
+    return len(bm.verts)
+        
+def get_rel_single_vert_position_data(object_name, vert_id_num, rounding_places):
+    
+    context = bpy.context
+    vertebre_obj = context.scene.objects[object_name]
+    depsgraph = context.evaluated_depsgraph_get()
+    bm = bmesh.new()
+    bm.from_object(vertebre_obj, depsgraph)
+    
+    if hasattr(bm.verts, "ensure_lookup_table"): 
+        bm.verts.ensure_lookup_table()
+    
+    vertebre_data = bm.verts[vert_id_num].co.xyz
+    x, y, z = vertebre_data
+    
+    return process_coords((x, y, z), rounding_places)
+
+
+def get_absol_position_data(object_name, rounding_places):
+    vert_location_data = get_rel_single_vert_position_data(object_name, 0, rounding_places)        
+    x_rel, y_rel, z_rel, position_string = vert_location_data
+    
+    location_data = bpy.data.objects[object_name].location.to_tuple()
+    
+    x, y, z = location_data
+    added_points = (x + x_rel, y + y_rel, z + z_rel)
+    
+    return process_coords(added_points, rounding_places)
+
+def get_length_data_by_obj(virtual_line_id_num, num_of_connection_points, rounding_places):
+    
+    total_length = 0
+    vert_distances = []
+    
+    for c in range(num_of_connection_points):
+        if c < num_of_connection_points + 1:
+            # get first point
+            vert1_name = "Vert_" + str(c) + "_" + str(virtual_line_id_num)
+            vert1_location_data = get_absol_position_data(vert1_name, rounding_places) 
+            x1, y1, z1, position_string = vert1_location_data
+            
+            # get second point
+            vert2_name = "Vert_" + str(c+1) + "_" + str(virtual_line_id_num)
+            vert2_location_data = get_absol_position_data(vert2_name, rounding_places) 
+            x2, y2, z2, position_string = vert2_location_data
+            
+            # get the Euclidean distance between points
+            a = (x1, y1, z1)
+            b = (x2, y2, z2)
+            point_distance = round(math.dist(a, b), rounding_places)
+            
+            total_length = total_length + point_distance
+            vert_distances.append(round(point_distance, rounding_places))
+            
+    length_data = round(total_length, rounding_places)  
+          
+    return (length_data, vert_distances)
+            
+
+def get_length_data_by_vert(object_name, rounding_places):
+    
+    total_length = 0
+    vert_distances = []
+    
+    obj_vert_count = get_obj_vert_count(object_name)
+    
+    # get additive length
+    for v in range(obj_vert_count):
+        if v < obj_vert_count - 1:
+            vert1_location_data = get_rel_single_vert_position_data(object_name, v, 2)
+            x1, y1, z1, position_string1 = vert1_location_data
+            
+            vert2_location_data = get_rel_single_vert_position_data(object_name, v+1, 2)
+            x2, y2, z2, position_string2 = vert2_location_data
+        
+            a = (x1, y1, z1)
+            b = (x2, y2, z2)
+            point_distance = round(math.dist(a, b), 4)
+            
+            total_length = total_length + point_distance
+            vert_distances.append(round(point_distance, rounding_places))
+            
+    length_data = round(total_length, rounding_places)  
+          
+    return (length_data, vert_distances)
+    
+
+def display_data(data_string, text_object_name):
+    scene = bpy.context.scene
+    scene.objects[text_object_name].data.body = data_string
+
+
+
+def anylize_positions():
+
+    # get_tendon_data(tendon_id_num, num_of_connection_points, rounding_places)
+    tendon_1_length, points_array_1 = get_length_data_by_obj(1, 8, 2)
+    points_array_1_text = ", ".join(str(x) for x in points_array_1)
+    
+    tendon_2_length, points_array_2 = get_length_data_by_obj(2, 8, 2)
+    points_array_2_text = ", ".join(str(x) for x in points_array_2)
+    
+    tendon_3_length, points_array_3 = get_length_data_by_obj(3, 8, 2)
+    points_array_3_text = ", ".join(str(x) for x in points_array_3)
+    
+    display_data(str(tendon_1_length), "tendon_length_1_text")
+    display_data(str(tendon_2_length), "tendon_length_2_text")
+    display_data(str(tendon_3_length), "tendon_length_3_text")     
+    
+    # get spine length
+    spine_length, spine_points_array = get_length_data_by_vert("spine", 2)
+    
+    spine_text = str(spine_length)
+    display_data(spine_text, "spine_length_text")
+    
+    
+    
+    tendon_1_spine_ratio = round(spine_length / tendon_1_length, 2)  
+    display_data(str(tendon_1_spine_ratio), "tendon_1_spine_ratio_text")
+    
+    tendon_1_pull_length = round(spine_length - tendon_1_length, 2)  
+    display_data(str(tendon_1_pull_length), "tendon_1_pull_length_text")    
+    
+    
+    
+    tendon_2_spine_ratio = round(spine_length / tendon_2_length, 2)  
+    display_data(str(tendon_2_spine_ratio), "tendon_2_spine_ratio_text")
+    
+    tendon_2_pull_length = round(spine_length - tendon_2_length, 2)  
+    display_data(str(tendon_2_pull_length), "tendon_2_pull_length_text") 
+    
+    
+    
+    tendon_3_spine_ratio = round(spine_length / tendon_3_length, 2)  
+    display_data(str(tendon_3_spine_ratio), "tendon_3_spine_ratio_text")
+    
+    tendon_3_pull_length = round(spine_length - tendon_3_length, 2)  
+    display_data(str(tendon_3_pull_length), "tendon_3_pull_length_text") 
+    
+
+anylize_positions()
+
+# re-enable the 3 lines below to enable updates onChange
+#@persistent
+#def load_change_handler(dummy):
+#    anylize_positions()
+#bpy.app.handlers.depsgraph_update_post.append(load_change_handler)
+
+
+
+#bpy.app.handlers.depsgraph_update_post.remove(load_change_handler)
+
+#create_line_vertebre(-.05)
+#make_tendon_points()
