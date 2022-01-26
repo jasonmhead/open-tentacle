@@ -1,18 +1,13 @@
 # Open Tentacle
-Open Tentacle is an open source robotics project for the design and implementation of a capable but affordable tentacle / continuum robot arm
+Open Tentacle is an open source robotics project for the design and implementation of a capable but affordable tentacle / continuum robot systems
 
 # Goals
-- Develop ROS compatable software integrations with easy to build structures and inexpensive electronic components
-
-[ROS](https://www.ros.org/)
-
-- Develop plug and play wrappers around the software systems
-
-- Explore jointless continummn design solutions that do not require geared joints and offer less restrictive degrees of freedom
 
 [Continuum Robots](https://www.google.com/search?q=Continuum++Robots&hs=Uh4&channel=fs&sxsrf=ALeKk03InHyTqxbpPBT8OlIoehBswv41-g:1590844447721&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjBy8ux1dvpAhVQBKYKHT8cD0MQ_AUoAXoECAwQAw&biw=1920&bih=832)
 
-- Implement / Develop solutions that will allow using jointless continummn limbs for grasping/arm operations and use in locomotion such as walking and climbing
+- Implement / Develop solutions that will allow using jointless continuum limbs for grasping/arm operations and use in locomotion such as walking and climbing
+
+- Explore jointless continummn design solutions that do not require geared joints
 
 - Intragrate camera based control solutions that do not require specialized control hardware such as teach pendants or control gloves
 
@@ -21,6 +16,12 @@ Open Tentacle is an open source robotics project for the design and implementati
 - Explore tendon base haptic feedback wearables for better control feedback  
 
 [Haptic Technology](https://en.wikipedia.org/wiki/Haptic_technology) 
+
+
+[ROS](https://www.ros.org/)
+
+- Potentually develop plug and play wrappers around the software systems
+
 
 # Designs
 
