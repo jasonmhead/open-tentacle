@@ -22,11 +22,7 @@ Open Tentacle is an open source robotics project for the design and implementati
 
 - Potentually develop plug and play wrappers around the software systems
 
-
-# Designs
-
-
-# Versions (Built and Design Only)
+# Versions (Both Built and Design versions)
 
 - 0.1.2
 - <img src="/0.1.2/0.1.2.jpg" width="200" />
