@@ -23,15 +23,25 @@ Open Tentacle is an open source robotics project for the design and implementati
 [Haptic Technology](https://en.wikipedia.org/wiki/Haptic_technology) 
 
 # Designs
-- Initial hydraulic concept: https://www.instagram.com/p/CHXh2IVrdIu/
 
-# Versions
-- 0.0.1 https://www.instagram.com/p/B9edjQtHMnh/ - will be re-done for implmenting a feedback loop
+
+# Versions (Built and Design Only)
+
+- 0.1.2
+- ![Image of v. 0.1.2](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.2/0.1.2.jpg | width=200)
+
+- 0.1.1
+- ![Image of v. 0.1.1](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.1/system_photo.jpg | width=200)
+
+- 0.1.0
+- ![Image of v. 0.1.0](https://github.com/jasonmhead/open-tentacle/blob/main/0.1.0/arm_bent.png | width=200)
 
 - 0.0.2 
-- ![Image of v. 0.0.2](https://raw.githubusercontent.com/jasonmhead/open-tentacle/main/0.0.2/renders/curved_w_500.png)
-  - - OpenCAD files (rough dev versions) https://github.com/jasonmhead/open-tentacle/tree/main/0.0.2/freeCAD
-  - - Rendered Images https://github.com/jasonmhead/open-tentacle/tree/main/0.0.2/renders
-  - - Video Renders https://github.com/jasonmhead/open-tentacle/tree/main/0.0.2/video_renders
-  -- Blender file here: https://github.com/jasonmhead/open-tentacle/tree/main/0.0.2
-  - - TODO add a parts breakdown in prep for building physical version
+- ![Image of v. 0.0.2](https://raw.githubusercontent.com/jasonmhead/open-tentacle/main/0.0.2/renders/curved_w_500.png | width=200)
+
+- 0.0.1
+- ![Image of v. 0.0.1](https://github.com/jasonmhead/open-tentacle/blob/main/.0.0.1/arm.v.0.0.1.PNG | width=200)
+
+- Initial hydraulic concept:
+- ![Image of hydraulic concept](https://github.com/jasonmhead/open-tentacle/blob/main/concepts/hydraulic/hydraulic_concept_1.JPG | width=200)
+
